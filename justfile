@@ -17,6 +17,7 @@ help:
     @echo "  act           - unit tests with pnpm"
     @echo "  act-run           - unit tests with pnpm"
     @echo "  test-mocha           - test with mocha"
+    @echo "  npm-publish-dry-run           - npm-publish-dry-run"
     @echo "  run           - combines download-codeql codeql-create-db codeql-analyze gitnexus-analyze"
 
 
@@ -136,6 +137,20 @@ codeql-status:
     @echo "CodeQL binary (if installed):"
     ls -l {{CODEQL_DIR}}/codeql || true
     if [ -d codeql-db ]; then {{CODEQL_DIR}}/codeql database info codeql-db || true; else echo "No codeql-db present"; fi
+
+npm-publish-dry-run:
+    @echo "Publishing to npm (dry-run) — updating version if needed"
+    @set +e; npm version 0.2.0 --no-git-tag-version 2> /tmp/just-npm-version.err; RC=$?; set -e; \
+    if [ $RC -eq 0 ]; then \
+        echo "Version updated"; \
+    else \
+        if grep -q "Version not changed" /tmp/just-npm-version.err 2>/dev/null; then \
+            echo "Version unchanged; continuing"; \
+        else \
+            echo "npm version failed:"; cat /tmp/just-npm-version.err; exit $RC; \
+        fi; \
+    fi; \
+    npm publish --dry-run
 
 run:
     just download-codeql
