@@ -53,12 +53,6 @@ Add your npm token to your GitHub repository secrets as `NPM_TOKEN`.
 
 Enable the Codecov GitHub App [here](https://github.com/apps/codecov).
 
-**Remove everything from here and above**
-
----
-
-# my-package-name
-
 [![npm package][npm-img]][npm-url]
 [![Build Status][build-img]][build-url]
 [![Downloads][downloads-img]][downloads-url]
@@ -72,13 +66,13 @@ Enable the Codecov GitHub App [here](https://github.com/apps/codecov).
 ## Install
 
 ```bash
-npm install my-package-name
+npm install ghost-datatype-support-lib
 ```
 
 ## Usage
 
 ```ts
-import { myPackage } from 'my-package-name';
+import { myPackage } from 'ghost-datatype-support-lib';
 
 myPackage('hello');
 //=> 'hello from my package'
