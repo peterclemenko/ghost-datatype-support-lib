@@ -63,7 +63,6 @@ export class ArdriveExport {
     if (rows.length === 0) return [];
 
     // First row is header — accept it but don't require exact matching
-    const header = parseCsvLine(rows[0]);
 
     const results: ArdriveExportRow[] = [];
     for (let i = 1; i < rows.length; i++) {
