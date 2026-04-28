@@ -123,3 +123,7 @@ lib/
 
 codeql.zip
 codeql-db
+
+results.sarif
+
+tools/codeql/codeql
