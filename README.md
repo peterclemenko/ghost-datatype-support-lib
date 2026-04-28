@@ -1,4 +1,8 @@
-# typescript-npm-package-template
+# ghost-datatype-support-lib
+
+datatype support lib
+
+designed to provide helper functions for handling filetypes and data types in ts apps
 
 > Template to kickstart creating a Node.js module using TypeScript and VSCode
 
