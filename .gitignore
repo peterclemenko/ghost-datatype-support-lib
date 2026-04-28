@@ -118,3 +118,8 @@ dist
 # Compiled code
 lib/
 .gitnexus
+
+# codeql
+
+codeql.zip
+codeql-db

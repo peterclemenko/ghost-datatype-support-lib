@@ -9,14 +9,15 @@
   outputs = { self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; };
+      # Allow unfree packages when evaluating the devshell (needed for codeql)
+      pkgs = import nixpkgs { inherit system; config = { allowUnfree = true; }; };
       in {
         devShells = {
           default = pkgs.mkShell {
             name = "ghost-datatype-support-lib-dev";
 
             # Include the requested packages from nixpkgs (nixos-unstable)
-            buildInputs = with pkgs; [ act fnm nodejs pnpm git coreutils ];
+            buildInputs = with pkgs; [ act fnm nodejs pnpm git docker pnpm coreutils mise codeql just ];
 
             # Common developer environment variables and helpful message
             shellHook = ''

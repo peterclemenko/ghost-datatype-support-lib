@@ -2,5 +2,6 @@
   "editor.formatOnSave": true,
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "codeQL.createQuery.qlPackLocation": "/home/aoi/dev/ghost-datatype-support-lib"
 }

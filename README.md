@@ -78,6 +78,21 @@ myPackage('hello');
 //=> 'hello from my package'
 ```
 
+**Scripts**
+- **build**: `tsc --project tsconfig.build.json` — Compile TypeScript sources into the `lib/` output directory and generate type declarations.
+- **clean**: `rm -rf ./lib/` — Remove previous build artifacts.
+- **cm**: `cz` — Run Commitizen for guided commit messages.
+- **lint**: `eslint ./src/ --fix` — Run ESLint on `src/` and auto-fix problems where possible.
+- **lint:ci**: `eslint ./src --max-warnings 0` — CI-safe lint run that fails on warnings.
+- **docs**: `typedoc --options typedoc.json` — Generate TypeDoc documentation into `docs/typedoc`.
+- **prepare**: `husky install` — Husky install hook (runs automatically during install).
+- **semantic-release**: `semantic-release` — Run semantic-release to publish changelogs and releases.
+- **test:watch**: `jest --watch` — Run Jest in watch mode.
+- **test**: `jest --coverage` — Run Jest with coverage output.
+- **test:mocha**: `mocha -r ts-node/register "test/**/*.mocha.spec.ts" --recursive` — Run Mocha tests written with TypeScript (ts-node).
+- **test:lint**: `npm run lint:ci` — Alias to the CI lint command.
+- **typecheck**: `tsc --noEmit` — Run TypeScript type checking without emitting files.
+
 ## API
 
 ### myPackage(input, options?)
