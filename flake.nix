@@ -22,6 +22,7 @@
             # Common developer environment variables and helpful message
             shellHook = ''
               echo "Entering devshell for ghost-datatype-support-lib (${system})"
+              just run
               echo "Available: act=$(command -v act >/dev/null && echo yes || echo no), fnm=$(command -v fnm >/dev/null && echo yes || echo no)"
             '';
           };
