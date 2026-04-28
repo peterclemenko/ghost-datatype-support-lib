@@ -7,11 +7,18 @@ CODEQL_URL := "https://github.com/github/codeql-cli-binaries/releases/latest/dow
 help:
     @echo "Targets:"
     @echo "  download-codeql   - Ensure CodeQL CLI is available (uses system CodeQL if on PATH)"
-    @echo "  create-db         - Create a CodeQL DB named 'codeql-db' (default build: pnpm install && pnpm run build). Use OVERWRITE=true to replace an existing DB."
-    @echo "  analyze           - Analyze 'codeql-db' with the JavaScript query pack and write results.sarif"
-    @echo "  clean-db          - Remove codeql-db, results.sarif and the downloaded CodeQL CLI"
-    @echo "  status            - Show CodeQL binary and DB info (if present)"
-    @echo "  run               - download-codeql, create-db, then analyze"
+    @echo "  codeql-create-db         - Create a CodeQL DB named 'codeql-db' (default build: pnpm install && pnpm run build). Use OVERWRITE=true to replace an existing DB."
+    @echo "  codeql-analyze           - Analyze 'codeql-db' with the JavaScript query pack and write results.sarif"
+    @echo "  codeql-clean-db          - Remove codeql-db, results.sarif and the downloaded CodeQL CLI"
+    @echo "  codeql-status            - Show CodeQL binary and DB info (if present)"
+    @echo "  codeql-run               - download-codeql, create-db, then analyze"
+    @echo "  gitnexus-analyze           - Analyze with gitnexus"
+    @echo "  pnpm-test           - unit tests with pnpm"
+    @echo "  act           - unit tests with pnpm"
+    @echo "  act-run           - unit tests with pnpm"
+    @echo "  test-mocha           - test with mocha"
+    @echo "  run           - combines download-codeql codeql-create-db codeql-analyze gitnexus-analyze"
+
 
 download-codeql:
     @echo "Ensuring CodeQL CLI is available (skips download if present)..."
@@ -35,7 +42,7 @@ download-codeql:
     fi; \
     echo "CodeQL available at: $(if command -v {{CODEQL_DIR}}/codeql >/dev/null 2>&1; then {{CODEQL_DIR}}/codeql --version 2>/dev/null || true; else command -v codeql || echo 'unknown'; fi)"
 
-create-db:
+codeql-create-db:
     @echo "Creating CodeQL DB 'codeql-db' (use BUILD_CMD and OVERWRITE env vars to override)"
     BUILD_CMD="${BUILD_CMD:-pnpm install && pnpm run build}"; \
     OVERWRITE="${OVERWRITE:-false}"; \
@@ -59,7 +66,7 @@ create-db:
     fi; \
     "$CMD" database create codeql-db --language=javascript --command "$BUILD_CMD" $OVERWRITE_FLAG
 
-analyze:
+codeql-analyze:
     @echo "Analyzing 'codeql-db' (use PACK and OUT env vars to override)"
     PACK="${PACK:-codeql/javascript-queries@latest}"; \
     OUT="${OUT:-results.sarif}"; \
@@ -73,16 +80,65 @@ analyze:
     fi; \
     "$CMD" database analyze codeql-db "$PACK" --format=sarif-latest --output="$OUT" --threads 0
 
-clean-db:
+# Unit test helpers
+pnpm-test:
+    @echo "Running unit tests (uses pnpm if available, falls back to npm)"
+    if command -v pnpm >/dev/null 2>&1; then \
+        pnpm test; \
+    elif command -v npm >/dev/null 2>&1; then \
+        npm test; \
+    else \
+        echo "Install pnpm or npm to run tests"; exit 2; \
+    fi
+
+test-mocha:
+    @echo "Running Mocha tests (pnpm/npm fallback)"
+    if command -v pnpm >/dev/null 2>&1; then \
+        pnpm run test:mocha; \
+    elif command -v npm >/dev/null 2>&1; then \
+        npm run test:mocha; \
+    else \
+        echo "Install pnpm or npm to run mocha tests"; exit 2; \
+    fi
+
+# GitHub Actions helpers using `act`
+act:
+    @echo "Running GitHub Actions locally with act (requires act + Docker)"
+    if command -v act >/dev/null 2>&1; then \
+        WORKFLOW="${WORKFLOW:-.github/workflows/ci.yml}"; \
+        JOB="${JOB:-}"; \
+        EVENT_FILE="${EVENT_FILE:-}"; \
+        CMD=(act -W "$WORKFLOW"); \
+        if [ -n "$JOB" ]; then CMD+=( -j "$JOB" ); fi; \
+        if [ -n "$EVENT_FILE" ]; then CMD+=( -e "$EVENT_FILE" ); fi; \
+        echo "Running: ${CMD[*]}"; \
+        "${CMD[@]}"; \
+    else \
+        echo "Install 'act' (https://github.com/nektos/act) or enable it in your devshell"; exit 2; \
+    fi
+
+act-run:
+    @echo "Convenience target: runs download-codeql, create-db, analyze, then runs act (if present)"
+    just download-codeql; \
+    just create-db; \
+    just analyze; \
+    just act
+
+codeql-clean-db:
     @echo "Removing codeql-db, results and downloaded CodeQL"
     rm -rf codeql-db results.sarif {{CODEQL_DIR}}
 
-status:
+gitnexus-analyze:
+    @echo "analyzing with gitnexus"
+    npx gitnexus analyze
+
+codeql-status:
     @echo "CodeQL binary (if installed):"
     ls -l {{CODEQL_DIR}}/codeql || true
     if [ -d codeql-db ]; then {{CODEQL_DIR}}/codeql database info codeql-db || true; else echo "No codeql-db present"; fi
 
 run:
     just download-codeql
-    just create-db
-    just analyze
+    just codeql-create-db
+    just codeql-analyze
+    just gitnexus-analyze

@@ -17,7 +17,7 @@
             name = "ghost-datatype-support-lib-dev";
 
             # Include the requested packages from nixpkgs (nixos-unstable)
-            buildInputs = with pkgs; [ act fnm nodejs pnpm git docker pnpm coreutils mise codeql just ];
+            buildInputs = with pkgs; [ act fnm nodejs pnpm git docker pnpm coreutils nushell mise codeql just ];
 
             # Common developer environment variables and helpful message
             shellHook = ''
