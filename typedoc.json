@@ -1,0 +1,9 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "tsconfig": "tsconfig.json",
+  "out": "docs/typedoc",
+  "exclude": ["**/test/**"],
+  "readme": "none",
+  "excludePrivate": true,
+  "excludeProtected": true
+}

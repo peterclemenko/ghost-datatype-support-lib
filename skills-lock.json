@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "skills": {
+    "context7-auto-research": {
+      "source": "davila7/claude-code-templates",
+      "sourceType": "github",
+      "skillPath": "cli-tool/components/skills/ai-research/context7-auto-research/SKILL.md",
+      "computedHash": "556f3bd3b59be46990bab40f922eb6ebfb711979a11836a6f78c78d658e82a41"
+    },
+    "context7-mcp": {
+      "source": "upstash/context7",
+      "sourceType": "github",
+      "skillPath": "skills/context7-mcp/SKILL.md",
+      "computedHash": "a4b485790d6ab03a95110bbda5fe269210faa01c1c171b44412ddc77ecabd18b"
+    },
+    "jsdoc-typescript-docs": {
+      "source": "patricio0312rev/skills",
+      "sourceType": "github",
+      "skillPath": "foundation/jsdoc-typescript-docs/SKILL.md",
+      "computedHash": "5b4f9de4974d5200db813921484dd4784c77bea7f3c0c79b31472e9546c374fd"
+    },
+    "markdown-documentation": {
+      "source": "aj-geddes/useful-ai-prompts",
+      "sourceType": "github",
+      "skillPath": "skills/markdown-documentation/SKILL.md",
+      "computedHash": "bebe932f4f94560dd90ae7534f2a8731edb70a3ca33f96ad8127cb1de4464780"
+    },
+    "mocha-skill": {
+      "source": "lambdatest/agent-skills",
+      "sourceType": "github",
+      "skillPath": "mocha-skill/SKILL.md",
+      "computedHash": "eb6eeba3caf9a53a8f9d1e8ffafdc1396fcb03381506f0294afcd4897cbae8c9"
+    }
+  }
+}

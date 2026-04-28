@@ -1,31 +1,34 @@
 {
-  "name": "typescript-npm-package-template",
+  "name": "ghost-datatype-support-lib",
   "version": "0.0.0-development",
   "description": "A template for creating npm packages using TypeScript and VSCode",
   "main": "./lib/index.js",
   "files": [
     "lib/**/*"
   ],
+  "packageManager": "pnpm@9.0.0",
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf ./lib/",
     "cm": "cz",
     "lint": "eslint ./src/ --fix",
+    "docs": "typedoc --options typedoc.json",
     "prepare": "husky install",
     "semantic-release": "semantic-release",
     "test:watch": "jest --watch",
     "test": "jest --coverage",
+    "test:mocha": "mocha -r ts-node/register \"test/**/*.mocha.spec.ts\" --recursive",
     "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ryansonshine/typescript-npm-package-template.git"
+    "url": "git+https://github.com/peterclemenko/ghost-datatype-support-lib.git"
   },
   "license": "MIT",
   "author": {
-    "name": "Ryan Sonshine",
-    "email": "ryansonshine@users.noreply.github.com",
-    "url": "https://github.com/ryansonshine"
+    "name": "Peter Clemenko",
+    "email": "peterclemenko@users.noreply.github.com",
+    "url": "https://github.com/peterclemenko"
   },
   "engines": {
     "node": ">=12.0"
@@ -49,6 +52,13 @@
     "@ryansonshine/commitizen": "^4.2.8",
     "@ryansonshine/cz-conventional-changelog": "^3.3.4",
     "@types/jest": "^27.5.2",
+    "mocha": "^10.2.0",
+    "chai": "^4.3.7",
+    "sinon": "^15.2.0",
+    "@types/mocha": "^10.0.1",
+    "@types/chai": "^4.3.4",
+    "jsdoc": "^4.0.2",
+    "typedoc": "^0.25.0",
     "@types/node": "^12.20.11",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
