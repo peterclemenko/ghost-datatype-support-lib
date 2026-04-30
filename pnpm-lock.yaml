@@ -69,7 +69,7 @@ importers:
         specifier: ^2.2.1
         version: 2.8.8
       semantic-release:
-        specifier: ^21.0.1
+        specifier: ^21.1.2
         version: 21.1.2(typescript@4.9.5)
       sinon:
         specifier: ^15.2.0
