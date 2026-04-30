@@ -60,7 +60,7 @@ importers:
         specifier: ^4.0.2
         version: 4.0.5
       lint-staged:
-        specifier: ^13.2.1
+        specifier: ^13.3.0
         version: 13.3.0(enquirer@2.4.1)
       mocha:
         specifier: ^10.2.0
